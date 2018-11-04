@@ -28,6 +28,7 @@ class UsersListState extends State<UsersList> {
             padding: const EdgeInsets.all(16.0),
             itemBuilder: (context, index) {
               return new ListTile(
+                leading: new Image.network(snapshot.data.documents[index]['picture'], width: 64.0, height: 64.0),
                 title: new Text(snapshot.data.documents[index]['first_name']),
                 subtitle: new Text(snapshot.data.documents[index]['last_name']),
               );

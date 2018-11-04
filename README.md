@@ -8,3 +8,7 @@ To launch the project with Visual Studio Code:
 - first install the Flutter extension
 - check that your connected device (phone or emulator) is showing on the right of the status bar at the bottom of the editor
 - press F5
+
+You may also use Android Studio:
+- first install the Flutter extension
+- enjoy ^^
