@@ -21,6 +21,8 @@ dependencies:
   cupertino_icons: ^0.1.2
   english_words: ^3.1.0
   cloud_firestore: ^0.8.2
+  image_picker: ^0.4.10
+  firebase_storage: ^1.0.4
 
 dev_dependencies:
   flutter_test:

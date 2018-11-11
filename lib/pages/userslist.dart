@@ -29,19 +29,53 @@ class UsersListState extends State<UsersList> {
             padding: const EdgeInsets.all(16.0),
             itemBuilder: (context, index) {
               return new ListTile(
-                  leading: new Image.network(
-                      snapshot.data.documents[index]['picture'],
-                      width: 64.0,
-                      height: 64.0),
+                  leading: new Hero(
+                      tag: 'photo' + index.toString(),
+                      child: Material(
+                          child: new Image.network(
+                              snapshot.data.documents[index]['picture'],
+                              width: 64.0,
+                              height: 64.0))),
                   title: new Text(snapshot.data.documents[index]['first_name']),
                   subtitle:
                       new Text(snapshot.data.documents[index]['last_name']),
                   onTap: () {
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => UserDetailPage(id: snapshot.data.documents[index].documentID))
+                        MaterialPageRoute(builder: (context) => UserDetailPage(id: snapshot.data.documents[index].documentID, photoTag: index.toString()))
                     );
                   });
+//              return InkWell(
+//                child: Row(
+//                  children: [
+//                    new Hero(
+//                        tag: 'photo' + index.toString(),
+//                        child: Material(
+//                            child: new Image.network(
+//                                snapshot.data.documents[index]['picture'],
+//                                width: 64.0,
+//                                height: 64.0))),
+//                    Expanded(
+//                      child: Column(
+//                        crossAxisAlignment: CrossAxisAlignment.start,
+//                        children: [
+//                          new Text(
+//                              snapshot.data.documents[index]['first_name']),
+//                          new Text(snapshot.data.documents[index]['last_name'])
+//                        ],
+//                      ),
+//                    )
+//                  ],
+//                ),
+//                onTap: () {
+//                  Navigator.push(
+//                      context,
+//                      MaterialPageRoute(
+//                          builder: (context) => UserDetailPage(
+//                              id: snapshot.data.documents[index].documentID,
+//                              photoTag: index.toString())));
+//                },
+//              );
             },
             itemCount: snapshot.data.documents.length,
           );
