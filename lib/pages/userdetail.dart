@@ -36,17 +36,50 @@ class UserDetailState extends State<UserDetail> {
   @override
   void initState() {
     super.initState();
-    Firestore.instance
-        .collection('users')
-        .document(this.id)
-        .get()
-        .then((userDoc) {
-      User user = new User(userDoc);
-      print(user.toString());
+    if (this.id != 'new') {
+      Firestore.instance
+          .collection('users')
+          .document(this.id)
+          .get()
+          .then((userDoc) {
+        User user = new User.fromSnapshot(userDoc);
+        setState(() {
+          _user = user;
+        });
+      });
+    } else {
+      User user = new User();
       setState(() {
         _user = user;
       });
-    });
+    }
+  }
+
+  submit() {
+    // Validate will return true if the form is valid, or false if
+    // the form is invalid.
+    if (_formKey.currentState.validate()) {
+      _formKey.currentState.save();
+      if (this.id != 'new') {
+        Map<String, dynamic> data =
+        this._user.toFirestoreObject(false);
+        print(data);
+        Firestore.instance
+            .collection('users')
+            .document(this.id)
+            .setData(data, merge: true)
+            .then((onValue) {
+          Navigator.pop(context);
+        });
+      } else {
+        Firestore.instance
+            .collection('users')
+            .add(this._user.toFirestoreObject(false))
+            .then((onValue) {
+          Navigator.pop(context);
+        });
+      }
+    }
   }
 
   @override
@@ -66,6 +99,9 @@ class UserDetailState extends State<UserDetail> {
                 }
               },
               initialValue: _user.firstName,
+              onSaved: (text) {
+                _user.firstName = text;
+              },
             ),
             TextFormField(
               validator: (value) {
@@ -74,6 +110,9 @@ class UserDetailState extends State<UserDetail> {
                 }
               },
               initialValue: _user.lastName,
+              onSaved: (text) {
+                _user.lastName = text;
+              },
             ),
             TextFormField(
               validator: (value) {
@@ -82,6 +121,9 @@ class UserDetailState extends State<UserDetail> {
                 }
               },
               initialValue: _user.description,
+              onSaved: (text) {
+                _user.description = text;
+              },
             ),
             TextFormField(
               validator: (value) {
@@ -90,19 +132,14 @@ class UserDetailState extends State<UserDetail> {
                 }
               },
               initialValue: _user.email,
+              onSaved: (text) {
+                _user.email = text;
+              },
             ),
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: RaisedButton(
-                onPressed: () {
-                  // Validate will return true if the form is valid, or false if
-                  // the form is invalid.
-                  if (_formKey.currentState.validate()) {
-                    // If the form is valid, we want to show a Snackbar
-                    Scaffold.of(context).showSnackBar(
-                        SnackBar(content: Text('Processing Data')));
-                  }
-                },
+                onPressed: this.submit,
                 child: Text('Submit'),
               ),
             ),
