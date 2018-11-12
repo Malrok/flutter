@@ -91,6 +91,7 @@ class UserDetailState extends State<UserDetail> {
     // the form is invalid.
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
+      this._user.picture = this.picturePath;
       if (this.id != 'new') {
         Map<String, dynamic> data = this._user.toFirestoreObject(false);
         print(data);
