@@ -9,41 +9,46 @@ import 'package:firebase_storage/firebase_storage.dart';
 class UserDetailPage extends StatelessWidget {
   final String id;
   final String photoTag;
+  final String picturePath;
 
-  UserDetailPage({@required this.id, @required this.photoTag});
+  UserDetailPage({@required this.id, this.picturePath, this.photoTag});
 
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(title: const Text('User\'s detail')),
-        body: UserDetail(id: this.id, photoTag: this.photoTag));
+        body: UserDetail(id: this.id, picturePath: this.picturePath, photoTag: this.photoTag));
   }
 }
 
 class UserDetail extends StatefulWidget {
   final String id;
   final String photoTag;
+  final String picturePath;
 
-  UserDetail({@required this.id, @required this.photoTag});
+  UserDetail({@required this.id, this.picturePath, this.photoTag});
 
   @override
   UserDetailState createState() =>
-      new UserDetailState(id: this.id, photoTag: this.photoTag);
+      new UserDetailState(id: this.id, picturePath: this.picturePath, photoTag: this.photoTag);
 }
 
 class UserDetailState extends State<UserDetail> {
   final String id;
-  final String photoTag;
+  String picturePath = '';
+  String photoTag = '';
 
   final _formKey = GlobalKey<FormState>();
   FirebaseStorage storage = FirebaseStorage(storageBucket: 'gs://cross-platform-test.appspot.com');
   StorageReference ref;
 
-  User _user;
-  String picturePath;
+  User _user = new User();
 
-  UserDetailState({@required this.id, @required this.photoTag}) {
+  UserDetailState({@required this.id, this.picturePath, this.photoTag}) {
     ref = storage.ref().child('avatars');
+    if (this.photoTag == null) {
+      this.photoTag = '';
+    }
   }
 
   @override
@@ -115,9 +120,9 @@ class UserDetailState extends State<UserDetail> {
 
   @override
   Widget build(BuildContext context) {
-    if (_user == null) {
-      return Center(child: CircularProgressIndicator());
-    } else {
+//    if (_user == null) {
+//      return Center(child: CircularProgressIndicator());
+//    } else {
       return new Container(
           padding: new EdgeInsets.all(16.0),
           child: Form(
@@ -186,6 +191,6 @@ class UserDetailState extends State<UserDetail> {
               ],
             ),
           ));
-    }
+//    }
   }
 }

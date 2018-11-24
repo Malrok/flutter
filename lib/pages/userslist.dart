@@ -7,7 +7,14 @@ class UsersListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
         appBar: new AppBar(title: const Text('Users\' list')),
-        body: UsersList());
+        body: UsersList(),
+      floatingActionButton: new FloatingActionButton(onPressed: () {
+        Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => UserDetailPage(id: 'new', photoTag: null))
+        );
+      }),
+    );
   }
 }
 
@@ -42,7 +49,7 @@ class UsersListState extends State<UsersList> {
                   onTap: () {
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => UserDetailPage(id: snapshot.data.documents[index].documentID, photoTag: index.toString()))
+                        MaterialPageRoute(builder: (context) => UserDetailPage(id: snapshot.data.documents[index].documentID, picturePath: snapshot.data.documents[index]['picture'] ,photoTag: index.toString()))
                     );
                   });
 //              return InkWell(
