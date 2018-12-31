@@ -8,13 +8,15 @@ class UsersListPage extends StatelessWidget {
     return new Scaffold(
       appBar: new AppBar(title: const Text('Users\' list')),
       body: UsersList(),
-      floatingActionButton: new FloatingActionButton(onPressed: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => UserDetailPage(
-                    id: 'new', picturePath: '', photoTag: null)));
-      }),
+      floatingActionButton: new FloatingActionButton(
+          onPressed: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => UserDetailPage(
+                        id: 'new', picturePath: '', photoTag: null)));
+          },
+          child: new Icon(Icons.add)),
     );
   }
 }

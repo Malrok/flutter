@@ -42,7 +42,7 @@ class UserDetailState extends State<UserDetail> {
 
   ImageService _imageService = ImageService();
   UserDao _dao = UserDao();
-  User _user = User();
+  User _user;
 
   UserDetailState({@required this.id, this.picturePath, this.photoTag}) {
     if (this.photoTag == null) {
@@ -55,10 +55,16 @@ class UserDetailState extends State<UserDetail> {
     super.initState();
     if (this.id != 'new') {
       this._dao.getUserById(this.id).then((user) {
-        _user.from(user);
         setState(() {
+          _user = user;
           picturePath = user.picture;
         });
+      });
+    } else {
+      User user = new User();
+      setState(() {
+        _user = user;
+        picturePath = user.picture;
       });
     }
   }
@@ -89,73 +95,77 @@ class UserDetailState extends State<UserDetail> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              InkWell(
-                  onTap: pickImage,
-                  child: Hero(
-                      tag: 'photo' + this.photoTag,
-                      child: Material(
-                          child: Image.network(picturePath,
-                              width: 64.0, height: 64.0)))),
-              TextFormField(
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                },
-                initialValue: _user.firstName,
-                onSaved: (text) {
-                  _user.firstName = text;
-                },
-              ),
-              TextFormField(
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                },
-                initialValue: _user.lastName,
-                onSaved: (text) {
-                  _user.lastName = text;
-                },
-              ),
-              TextFormField(
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                },
-                initialValue: _user.description,
-                onSaved: (text) {
-                  _user.description = text;
-                },
-              ),
-              TextFormField(
-                validator: (value) {
-                  if (value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                },
-                initialValue: _user.email,
-                onSaved: (text) {
-                  _user.email = text;
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: RaisedButton(
-                  onPressed: this.submit,
-                  child: Text('Submit'),
+    if (_user == null) {
+      return Center(child: CircularProgressIndicator());
+    } else {
+      return Container(
+          padding: EdgeInsets.all(16.0),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                InkWell(
+                    onTap: pickImage,
+                    child: Hero(
+                        tag: 'photo' + this.photoTag,
+                        child: Material(
+                            child: Image.network(picturePath,
+                                width: 64.0, height: 64.0)))),
+                TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                  },
+                  initialValue: _user.firstName,
+                  onSaved: (text) {
+                    _user.firstName = text;
+                  },
                 ),
-              ),
-            ],
-          ),
-        ));
+                TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                  },
+                  initialValue: _user.lastName,
+                  onSaved: (text) {
+                    _user.lastName = text;
+                  },
+                ),
+                TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                  },
+                  initialValue: _user.description,
+                  onSaved: (text) {
+                    _user.description = text;
+                  },
+                ),
+                TextFormField(
+                  validator: (value) {
+                    if (value.isEmpty) {
+                      return 'Please enter some text';
+                    }
+                  },
+                  initialValue: _user.email,
+                  onSaved: (text) {
+                    _user.email = text;
+                  },
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: RaisedButton(
+                    onPressed: this.submit,
+                    child: Text('Submit'),
+                  ),
+                ),
+              ],
+            ),
+          ));
+    }
   }
 }
