@@ -6,13 +6,14 @@ class UsersListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: new AppBar(title: const Text('Users\' list')),
-        body: UsersList(),
+      appBar: new AppBar(title: const Text('Users\' list')),
+      body: UsersList(),
       floatingActionButton: new FloatingActionButton(onPressed: () {
         Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => UserDetailPage(id: 'new', photoTag: null))
-        );
+            MaterialPageRoute(
+                builder: (context) => UserDetailPage(
+                    id: 'new', picturePath: '', photoTag: null)));
       }),
     );
   }
@@ -49,40 +50,13 @@ class UsersListState extends State<UsersList> {
                   onTap: () {
                     Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => UserDetailPage(id: snapshot.data.documents[index].documentID, picturePath: snapshot.data.documents[index]['picture'] ,photoTag: index.toString()))
-                    );
+                        MaterialPageRoute(
+                            builder: (context) => UserDetailPage(
+                                id: snapshot.data.documents[index].documentID,
+                                picturePath: snapshot.data.documents[index]
+                                    ['picture'],
+                                photoTag: index.toString())));
                   });
-//              return InkWell(
-//                child: Row(
-//                  children: [
-//                    new Hero(
-//                        tag: 'photo' + index.toString(),
-//                        child: Material(
-//                            child: new Image.network(
-//                                snapshot.data.documents[index]['picture'],
-//                                width: 64.0,
-//                                height: 64.0))),
-//                    Expanded(
-//                      child: Column(
-//                        crossAxisAlignment: CrossAxisAlignment.start,
-//                        children: [
-//                          new Text(
-//                              snapshot.data.documents[index]['first_name']),
-//                          new Text(snapshot.data.documents[index]['last_name'])
-//                        ],
-//                      ),
-//                    )
-//                  ],
-//                ),
-//                onTap: () {
-//                  Navigator.push(
-//                      context,
-//                      MaterialPageRoute(
-//                          builder: (context) => UserDetailPage(
-//                              id: snapshot.data.documents[index].documentID,
-//                              photoTag: index.toString())));
-//                },
-//              );
             },
             itemCount: snapshot.data.documents.length,
           );

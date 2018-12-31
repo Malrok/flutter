@@ -41,4 +41,13 @@ class User {
     }
     return result;
   }
+
+  from(User user) {
+    this.id = user.id;
+    this.firstName = user.firstName;
+    this.lastName = user.lastName;
+    this.description = user.description;
+    this.email = user.email;
+    this.picture = user.picture;
+  }
 }
