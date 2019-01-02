@@ -30,11 +30,12 @@ class UsersListState extends State<UsersList> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('users').limit(10).snapshots(),
+      stream: Firestore.instance.collection('users').snapshots(),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
         } else {
+          print('UsersListState ' + new DateTime.now().millisecondsSinceEpoch.toString());
           return new ListView.builder(
             padding: const EdgeInsets.all(16.0),
             itemBuilder: (context, index) {

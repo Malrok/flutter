@@ -15,12 +15,12 @@ class User {
     if (snapDoc != null) {
       Map<String, dynamic> data = snapDoc.data;
       this.id = snapDoc.documentID;
-      this.firstName = data['first_name'];
-      this.lastName = data['last_name'];
-      this.description = data['description'];
-      this.email = data['email'];
-      this.picture = data['picture'];
-//    this.address = data['address'];
+      this.firstName = data.containsKey('first_name') ? data['first_name'] : "";
+      this.lastName = data.containsKey('last_name') ? data['last_name'] : "";
+      this.description = data.containsKey('description') ? data['description'] : "";
+      this.email = data.containsKey('email') ? data['email'] : "";
+      this.picture = data.containsKey('picture') ? data['picture'] : "";
+      this.address = data.containsKey('address') ? data['address'] : GeoPoint(0, 0);
     }
   }
 
@@ -36,6 +36,7 @@ class User {
     result['description'] = this.description;
     result['email'] = this.email;
     result['picture'] = this.picture;
+    result['address'] = this.address;
     if (addId) {
       result['id'] = this.id;
     }
@@ -49,5 +50,6 @@ class User {
     this.description = user.description;
     this.email = user.email;
     this.picture = user.picture;
+    this.address = user.address;
   }
 }

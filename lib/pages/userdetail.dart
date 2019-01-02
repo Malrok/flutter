@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutterr/models/user.model.dart';
 import 'package:flutterr/services/image.dart';
 import 'package:flutterr/services/userdao.dart';
+import 'package:flutterr/widgets/address-autocomplete.dart';
 
 class UserDetailPage extends StatelessWidget {
   final String id;
@@ -155,6 +156,9 @@ class UserDetailState extends State<UserDetail> {
                   onSaved: (text) {
                     _user.email = text;
                   },
+                ),
+                AddressAutocomplete(
+                  location: _user.address
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
