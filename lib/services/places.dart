@@ -10,15 +10,18 @@ class Places {
   static Future<List<AddressModel>> getPlaces(String query) async {
     List<AddressModel> addresses = List();
 
-    final response = await http.get(PLACES_URL
-        .replaceAll('QUERY', query)
+    final answer = await http.get(PLACES_URL
+        .replaceAll('QUERY', query.replaceAll(' ', '+'))
         .replaceAll(
             'PLACES_API_KEY', 'AIzaSyCJhO9SPTit2418hkttbpn_KFxL-G3yyPM'));
 
-    if (response.statusCode == 200) {
-      List<dynamic> results = json.decode(response.body)['results'];
-      results.forEach(
-          (value) => addresses.add(AddressModel.fromJson(value)));
+    if (answer.statusCode == 200) {
+      Map<String, dynamic> body = json.decode(answer.body);
+      if (body['status'] == 'OK') {
+        List<dynamic> results = body['results'];
+        results.forEach(
+            (value) => addresses.add(AddressModel.fromJson(value)));
+      }
       return addresses;
     } else {
       // If that response was not OK, throw an error.

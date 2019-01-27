@@ -70,6 +70,7 @@ class AddressAutocompleteModalState extends State<AddressAutocompleteModal> {
                       itemBuilder: (context, index) {
                         return ListTile(
                           title: new Text(_addresses[index].formattedAddress),
+                          onTap: () => Navigator.pop(context, _addresses[index]),
                         );
                       },
                       itemCount: _addresses.length,

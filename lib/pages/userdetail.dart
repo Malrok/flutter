@@ -172,7 +172,10 @@ class UserDetailState extends State<UserDetail> {
                     _user.email = text;
                   },
                 ),
-                AddressAutocomplete(location: _user.address),
+                AddressAutocomplete(
+                  location: _user.address,
+                  onChange: (geopoint) => _user.address = geopoint,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: RaisedButton(

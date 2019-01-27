@@ -5,9 +5,10 @@ import 'package:flutterr/services/geocoding.dart';
 import 'package:flutterr/widgets/address-autocomplete-modal.dart';
 
 class AddressAutocomplete extends StatefulWidget {
-  final GeoPoint location;
+  GeoPoint location;
+  Function(GeoPoint) onChange;
 
-  AddressAutocomplete({this.location});
+  AddressAutocomplete({this.location, this.onChange});
 
   @override
   AddressAutocompleteState createState() =>
@@ -15,12 +16,13 @@ class AddressAutocomplete extends StatefulWidget {
 }
 
 class AddressAutocompleteState extends State<AddressAutocomplete> {
-  final GeoPoint location;
+  GeoPoint location;
+  Function(GeoPoint) onChange;
 
   Geocoding _geocoding = Geocoding();
   AddressModel _addressModel;
 
-  AddressAutocompleteState({this.location});
+  AddressAutocompleteState({this.location, this.onChange});
 
   @override
   void initState() {
@@ -39,7 +41,13 @@ class AddressAutocompleteState extends State<AddressAutocomplete> {
 //    setState(() {
 //      _addressModel.formattedAddress = place.address;
 //    });
-    await Navigator.push(context, MaterialPageRoute(builder: (context) => AddressAutocompleteModal()));
+    AddressModel address = await Navigator.push(context,
+        MaterialPageRoute(builder: (context) => AddressAutocompleteModal()));
+    setState(() {
+      _addressModel = address;
+      location = GeoPoint(address.latitude, address.longitude);
+    });
+    widget.onChange(location);
   }
 
   @override
