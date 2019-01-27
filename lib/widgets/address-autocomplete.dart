@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterr/models/address.model.dart';
 import 'package:flutterr/services/geocoding.dart';
+import 'package:flutterr/widgets/address-autocomplete-modal.dart';
 
 class AddressAutocomplete extends StatefulWidget {
   final GeoPoint location;
@@ -33,11 +34,12 @@ class AddressAutocompleteState extends State<AddressAutocomplete> {
         .catchError((err) => print(err));
   }
 
-  onTap() async {
+  onTap(BuildContext context) async {
 //    Place place = await PluginGooglePlacePicker.showAutocomplete(PlaceAutocompleteMode.MODE_FULLSCREEN);
 //    setState(() {
 //      _addressModel.formattedAddress = place.address;
 //    });
+    await Navigator.push(context, MaterialPageRoute(builder: (context) => AddressAutocompleteModal()));
   }
 
   @override
@@ -46,13 +48,13 @@ class AddressAutocompleteState extends State<AddressAutocomplete> {
         _addressModel.formattedAddress == null ||
         _addressModel.formattedAddress == "") {
       return GestureDetector(
-          onTap: onTap,
+          onTap: () => onTap(context),
           child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: Text("Input address")));
     } else {
       return GestureDetector(
-          onTap: onTap,
+          onTap: () => onTap(context),
           child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: Text(_addressModel.formattedAddress)));

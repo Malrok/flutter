@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterr/pages/userdetail.dart';
+import '../translations.dart';
 
 class UsersListPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(title: const Text('Users\' list')),
+    return Scaffold(
+      appBar: AppBar(title: Text(Translations.of(context).text('list_title'))),
       body: UsersList(),
       floatingActionButton: new FloatingActionButton(
           onPressed: () {
@@ -35,7 +36,7 @@ class UsersListState extends State<UsersList> {
         if (!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
         } else {
-          print('UsersListState ' + new DateTime.now().millisecondsSinceEpoch.toString());
+//          print('UsersListState ' + new DateTime.now().millisecondsSinceEpoch.toString());
           return new ListView.builder(
             padding: const EdgeInsets.all(16.0),
             itemBuilder: (context, index) {

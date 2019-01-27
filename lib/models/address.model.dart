@@ -10,12 +10,16 @@ class AddressModel {
 
   AddressModel();
 
-  AddressModel.fromAddress(Address address) {
-    latitude = address.coordinates.latitude;
-    longitude = address.coordinates.longitude;
-    formattedAddress = address.addressLine;
-    postalCode = address.postalCode;
-    city = address.locality;
-    country = address.countryName;
-  }
+  AddressModel.fromAddress(Address address)
+      : latitude = address.coordinates.latitude,
+        longitude = address.coordinates.longitude,
+        formattedAddress = address.addressLine,
+        postalCode = address.postalCode,
+        city = address.locality,
+        country = address.countryName;
+
+  AddressModel.fromJson(Map<String, dynamic> json)
+      : latitude = json['geometry']['location']['lat'],
+        longitude = json['geometry']['location']['lng'],
+        formattedAddress = json['formatted_address'];
 }

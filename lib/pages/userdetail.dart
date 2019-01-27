@@ -4,6 +4,8 @@ import 'package:flutterr/services/image.dart';
 import 'package:flutterr/services/userdao.dart';
 import 'package:flutterr/widgets/address-autocomplete.dart';
 
+import '../translations.dart';
+
 class UserDetailPage extends StatelessWidget {
   final String id;
   final String photoTag;
@@ -14,7 +16,8 @@ class UserDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('User\'s detail')),
+        appBar:
+            AppBar(title: Text(Translations.of(context).text('details_title'))),
         body: UserDetail(
             id: this.id,
             picturePath: this.picturePath,
@@ -43,7 +46,7 @@ class UserDetailState extends State<UserDetail> {
 
   ImageService _imageService = ImageService();
   UserDao _dao = UserDao();
-  User _user;
+  UserModel _user;
 
   UserDetailState({@required this.id, this.picturePath, this.photoTag}) {
     if (this.photoTag == null) {
@@ -62,7 +65,7 @@ class UserDetailState extends State<UserDetail> {
         });
       });
     } else {
-      User user = new User();
+      UserModel user = new UserModel();
       setState(() {
         _user = user;
         picturePath = user.picture;
@@ -119,6 +122,9 @@ class UserDetailState extends State<UserDetail> {
                       return 'Please enter some text';
                     }
                   },
+                  decoration: InputDecoration(
+                      labelText:
+                          Translations.of(context).text('details_first_name')),
                   initialValue: _user.firstName,
                   onSaved: (text) {
                     _user.firstName = text;
@@ -130,6 +136,9 @@ class UserDetailState extends State<UserDetail> {
                       return 'Please enter some text';
                     }
                   },
+                  decoration: InputDecoration(
+                      labelText:
+                          Translations.of(context).text('details_last_name')),
                   initialValue: _user.lastName,
                   onSaved: (text) {
                     _user.lastName = text;
@@ -141,6 +150,9 @@ class UserDetailState extends State<UserDetail> {
                       return 'Please enter some text';
                     }
                   },
+                  decoration: InputDecoration(
+                      labelText:
+                          Translations.of(context).text('details_description')),
                   initialValue: _user.description,
                   onSaved: (text) {
                     _user.description = text;
@@ -152,19 +164,20 @@ class UserDetailState extends State<UserDetail> {
                       return 'Please enter some text';
                     }
                   },
+                  decoration: InputDecoration(
+                      labelText:
+                          Translations.of(context).text('details_email')),
                   initialValue: _user.email,
                   onSaved: (text) {
                     _user.email = text;
                   },
                 ),
-                AddressAutocomplete(
-                  location: _user.address
-                ),
+                AddressAutocomplete(location: _user.address),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: RaisedButton(
                     onPressed: this.submit,
-                    child: Text('Submit'),
+                    child: Text(Translations.of(context).text('submit')),
                   ),
                 ),
               ],

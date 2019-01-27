@@ -1,0 +1,11 @@
+{
+  "list_title": "Liste d'utilisateurs",
+  "details_title": "Détails de l'utilisateur",
+  "details_first_name": "Prénom",
+  "details_last_name": "Nom",
+  "details_description": "Description",
+  "details_email": "Email",
+  "address_autcomplete_title": "Recherche d'adresse",
+  "address_autcomplete_hint": "Entrez une addresse",
+  "submit": "Valider"
+}
